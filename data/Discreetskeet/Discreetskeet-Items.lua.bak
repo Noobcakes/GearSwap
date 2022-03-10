@@ -1,0 +1,43 @@
+--Gearsets your character will use among multiple jobs.
+
+sets.Sheltered = {ring2="Sheltered Ring"}
+sets.Capacity = {back="Mecisto. Mantle"}
+
+sets.buff.Doom = {waist="Gishdubar Sash",ring1="Eshmun's Ring",ring2="Purity Ring"}
+sets.TreasureHunter = {head="Wh. Rarab Cap +1",waist="Chaac Belt"}
+
+--Augmented items that you'll use among multiple jobs.
+
+------   JSE Etc. Capes and stuff   ------
+
+--- NIN BACKS 
+		DA_DEX_NIN_back={ name="Andartia's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+5','"Dbl.Atk."+10',}}
+
+--- COR BACKS
+		RNG_STP_COR_BACK={ name="Camulus's Mantle", augments={'AGI+20','Rng.Acc.+20 Rng.Atk.+20','"Store TP"+5',}}
+
+--- GEO BACKS	
+		gear.nuke_jse_back={ name="Nantosuelta's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','Mag. Acc.+10','"Mag.Atk.Bns."+10','Phys. dmg. taken-10%',}}
+		gear.idle_jse_back={ name="Nantosuelta's Cape", augments={'MP+60','Eva.+20 /Mag. Eva.+20','Pet: "Regen"+10','Pet: "Regen"+5',}}
+		
+--- THF BACKS
+		DA_DEX_THF_back={ name="Toutatis's Cape", augments={'DEX+20','Accuracy+20 Attack+20','"Dbl.Atk."+10','Phys. dmg. taken-10%',}}
+		CRIT_DEX_THF_back={ name="Toutatis's Cape", augments={'DEX+20','Accuracy+20 Attack+20','Crit.hit rate+10',}}
+--- MERLIN GEAR
+		gear.merlinic_refresh_hands={ name="Merlinic Dastanas", augments={'"Mag.Atk.Bns."+1','Pet: Phys. dmg. taken -2%','"Refresh"+2','Accuracy+10 Attack+10',}}
+		gear.merlinic_refresh_legs={ name="Merlinic Shalwar", augments={'STR+10','Pet: INT+7','"Refresh"+2',}}
+		gear.merlinic_refresh_feet={ name="Merlinic Crackows", augments={'MND+8','Accuracy+1','"Refresh"+2','Accuracy+9 Attack+9',}}
+
+--- WEAPONS
+		gear.GADA_ENHANCING={ name="Gada", augments={'Enh. Mag. eff. dur. +6','STR+5','Mag. Acc.+12','"Mag.Atk.Bns."+12','DMG:+5',}}
+
+--- HERCULEAN GEAR
+		QADA_HERC_head={ name="Herculean Helm", augments={'"Dbl.Atk."+4','"Fast Cast"+2','Quadruple Attack +3','Accuracy+13 Attack+13','Mag. Acc.+19 "Mag.Atk.Bns."+19',}}
+		TA_HERC_body={ name="Herculean Vest", augments={'"Triple Atk."+3','DEX+8','Accuracy+14','Attack+1',}}
+		ACC_HERC_legs={ name="Herculean Trousers", augments={'Accuracy+30','"Store TP"+1',}}
+		TA_HERC_feet={ name="Herculean Boots", augments={'Accuracy+11','"Triple Atk."+4','Attack+3',}}
+	
+--- ADHEMAR
+		ACC_ADHEMAR_hands={ name="Adhemar Wristbands", augments={'DEX+10','AGI+10','Accuracy+15',}}
+		ATT_ADHEMAR_body={ name="Adhemar Jacket +1", augments={'STR+12','DEX+12','Attack+20',}}
+		ATT_ADHEMAR_hands={ name="Adhemar Wrist. +1", augments={'STR+12','DEX+12','Attack+20',}}
