@@ -1,0 +1,220 @@
+--This is where functions go that are for all characters that you play.
+
+function set_macro_page(set,book)
+    if not tonumber(set) then
+        add_to_chat(123,'Error setting macro page: Set is not a valid number ('..tostring(set)..').')
+        return
+    end
+    if set < 1 or set > 10 then
+        add_to_chat(123,'Error setting macro page: Macro set ('..tostring(set)..') must be between 1 and 10.')
+        return
+    end
+    
+    if book then
+        if not tonumber(book) then
+            add_to_chat(123,'Error setting macro page: book is not a valid number ('..tostring(book)..').')
+            return
+        end
+        if book < 1 or book > 40 then
+            add_to_chat(123,'Error setting macro page: Macro book ('..tostring(book)..') must be between 1 and 40.')
+            return
+        end
+        send_command('@input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
+        else
+        send_command('@input /macro set '..tostring(set))
+    end
+end
+
+send_command('alias synth wait 4; input /lastsynth')
+send_command('alias cracker wait 1.5; input /item "Garlic Cracker" <t>')
+send_command('alias cracker2 wait 1.5; input /targetnpc;wait .5;input /item "Garlic Cracker" <t>')
+send_command('alias millioncorn wait 2;input /targetnpc;wait 2;tradenpc 3 millioncorn;wait 4;setkey enter;wait .2;setkey enter up')
+send_command('alias brd send @brd exec brd_buffs')
+send_command('alias mins send zonobia exec brd_min_buffs')
+ammostock = 98
+
+
+---TEST SHIT---
+send_command('alias derp send @others //terminate; wait 1; terminate')
+send_command('alias trial scripted toggle farmbot; wait 1; send @all /warp')
+
+-- send_command('alias team1 send @others /assist '..player.name..';wait 0.5;send @others /tell '..player.name..' Targeting:    <t>;wait 1; send @brd /attack <t>; wait 1; send @brd /follow <t>')
+
+-- send_command('alias team3 sat alltarget ;wait 0.5;send @others /tell '..player.name..' Targeting:    <t>;wait 1; sat allattack; wait 1; send @others /follow <t>')
+send_command('alias team1 sat alltarget ;wait 0.5;send @others /tell '..player.name..' Targeting:    <t>;wait 1; send @others /attack <t>; wait 1; send @others /follow <t>')
+--  BrdGeoDebuff
+send_command('alias team2 sat alltarget ;wait 0.5;send @others /tell '..player.name..' Targeting:    <t>; wait 1; send @others /follow <t>; wait 0.1 ; lmages; wait .1; send @war /attack <t>;wait 0.1; send @thf /attack <t>;wait 0.1; send @mnk /attack <t>;wait 0.1; send @drk /attack <t>;wait 0.1; send @sam /attack <t>;wait 0.1; send @drg /attack <t>;wait 0.1; send @dnc /attack <t>;wait 0.1; send @blu /attack <t>; exec BrdGeoDebuff; wait 1')
+
+
+---INVITE SHIT --------
+    send_command('alias addm input /pcmd add Misskillface')
+    send_command('alias addb input /pcmd add Bazookatooth')
+    send_command('alias addd input /pcmd add Discreetskeet')
+    send_command('alias addz input /pcmd add Zonobia')
+    send_command('alias addy input /pcmd add Funcrusher')
+    send_command('alias addk input /pcmd add Kaht')
+    send_command('alias adde input /pcmd add Elli')
+    send_command('alias addp input /pcmd add Paoja')
+    send_command('alias adddier input /pcmd add Dierdren')
+    send_command('alias addmuf input /pcmd add Muffintops')
+    send_command('alias addf input /pcmd add Faithfulx')
+
+    send_command('alias addall input /pcmd add Bazookatooth; wait .1; input /pcmd add Funcrusher; wait .1; input /pcmd add Zonobia; wait .1; input /pcmd add Misskillface;wait .1; input /pcmd add Discreetskeet;')
+-- send_command('alias addall input /pcmd add Bazookatooth; wait 1; input /pcmd add Funcrusher; wait 1; input /pcmd add Zonobia; wait 1; input /pcmd add Misskillface;wait 1; input /pcmd add Discreetskeet;')
+    send_command('alias addmine addm; wait 2; addb; wait 2; addy; wait 2; addd')
+    send_command('alias addkahts addb; wait 2; addy; wait 2; addm; wait 2; addd; wait 2; addk; wait 2; addz')
+
+---KAHT'S FOLLOW SHIT---
+    send_command('bind ^f send @others /follow '..player.name..';wait 0.5;send @all /echo *** Follow on. ***')
+    send_command('bind !f send @others setkey numpad7 down;wait 0.1;send @others setkey numpad7 up;wait 0.5;send @all /echo === Follow off. ===')
+
+---MY FOLLOW SHIT ---
+    send_command('alias fme send @others /follow '..player.name..';wait 0.5;send @all /echo *** Follow on. ***')
+    send_command('alias lme send @others setkey numpad7 down;wait 0.1;send @others setkey numpad7 up;wait 0.5;send @all /echo === Follow off. ===')
+---SPECIFIC FOLLOW SHIT ---
+
+    send_command('alias lmages send @brd setkey numpad7 down;wait 0.1;send @brd setkey numpad7 up; wait 0.1;send @geo setkey numpad7 down;wait 0.1;send @geo setkey numpad7 up;wait 0.1;send @whm setkey numpad7 down;wait 0.1;send @whm setkey numpad7 up;wait 0.1;send @sch setkey numpad7 down;wait 0.1;send @sch setkey numpad7 up;wait 0.1;send @cor setkey numpad7 down;wait 0.1;send @cor setkey numpad7 up')
+    send_command('alias lmeall send @all setkey numpad7 down;wait 0.1;send @all setkey numpad7 up;wait 0.5;send @all /echo === Follow off. ===')
+
+    send_command('alias dmme dall 1 input /follow '..player.name..';wait 0.5;dall input /echo *** Follow on. ***')
+    send_command('alias sheep dall lua l herd ;wait 2; herd shepherd; wait 0.5;send @all /echo *** Shepherd on. ***')
+    send_command('alias wolves send @others setkey numpad7 down;wait 0.1;send @others setkey numpad7 up;dall lua u herd;wait 0.5;send @all /echo === Follow off. ===')
+
+
+    send_command('alias wall send @all /warp')
+    send_command('alias sall send @all /sneak <me>')
+    send_command('alias iall send @all /invisible <me>')
+    send_command('alias ciall send @all //cancel 69')
+    send_command('alias csall send @all //cancel 71')
+
+---ROLLS
+    send_command('alias french send @cor //roller roll')
+
+--Treasury Stuff
+    send_command('alias pass send @others //tr passall')
+    send_command('alias piss send @all //tr passall')
+    send_command('alias lot input //tr lotall')
+    send_command('alias eltee send @all lua l treasury')
+
+---MOUNT STUFF
+    send_command('alias crabs send @all //mr')
+    send_command('alias walk send @all /dismount')
+    send_command('alias bsneaker send bazookatooth /sneak misskillface; wait 6; send bazookatooth /invisible misskillface; wait 6; send bazookatooth /sneak <me>; wait 6; send bazookatooth /invisible <me>; ')
+
+---WARP PARTY //d2X
+    send_command('alias d21 input /warp2 <p1>; wait 8; input /warp <me>; ')
+    send_command('alias d22 input /warp2 <p1>; wait 8; input /warp2 <p2>; wait 8; input /warp <me>; ')
+    send_command('alias d23 input /warp2 <p1>; wait 8; input /warp2 <p2>; wait 8; input /warp2 <p3>; wait 8; input /warp <me>; ')
+    send_command('alias d24 input /warp2 <p1>; wait 8; input /warp2 <p2>; wait 8; input /warp2 <p3>; wait 8; input /warp2 <p4>; wait 8; input /warp <me>; ')
+    send_command('alias d25 input /warp2 <p1>; wait 8; input /warp2 <p2>; wait 8; input /warp2 <p3>; wait 8; input /warp2 <p4>; wait 8; input /warp2 <p5>; wait 8; input /warp <me>; ')
+--Reisen Warps
+    ---All Warps
+    send_command('alias alldem ord @@ gs c useitem ring1 "Dim. Ring (Dem)" ')
+    send_command('alias allmea ord @@ gs c useitem ring1 "Dim. Ring (mea)" ')
+    send_command('alias allholla ord @@ gs c useitem ring1 "Dim. Ring (holla)" ')
+    ---Party Warps
+    send_command('alias pdem ord pp gs c useitem ring1 "Dim. Ring (Dem)" ')
+    send_command('alias pmea ord pp gs c useitem ring1 "Dim. Ring (mea)" ')
+    send_command('alias pholla ord pp gs c useitem ring1 "Dim. Ring (holla)" ')
+    ---Solo warps
+    send_command('alias medem gs c useitem ring1 "Dim. Ring (Dem)" ')
+    send_command('alias memea gs c useitem ring1 "Dim. Ring (mea)" ')
+    send_command('alias meholla gs c useitem ring1 "Dim. Ring (holla)" ')
+
+---SNEAK/INVIS PARTY //sipx
+
+send_command('alias sip1 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /invisible <p1>; wait 6; send bazookatooth /sneak <me>; wait 6; send bazookatooth /invisible <me>; ')
+send_command('alias sip2 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /invisible <p1>; wait 6; send bazookatooth /sneak <p2>; wait 6; send bazookatooth /invisible <p2>; wait 6; send bazookatooth /sneak <me>; wait 6; send bazookatooth /invisible <me>;  ')
+send_command('alias sip3 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /invisible <p1>; wait 6; send bazookatooth /sneak <p2>; wait 6; send bazookatooth /invisible <p2>; wait 6; send bazookatooth /sneak <p3>; wait 6; send bazookatooth /invisible <p3>; wait 6; send bazookatooth /sneak <me>; wait 6; send bazookatooth /invisible <me>;  ')
+send_command('alias sip4 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /invisible <p1>; wait 6; send bazookatooth /sneak <p2>; wait 6; send bazookatooth /invisible <p2>; wait 6; send bazookatooth /sneak <p3>; wait 6; send bazookatooth /invisible <p3>; wait 6; send bazookatooth /sneak <p4>; wait 6; send bazookatooth /invisible <p4>; wait 6; send bazookatooth /sneak <me>; wait 6; send bazookatooth /invisible <me>;  ')
+send_command('alias sip5 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /invisible <p1>; wait 6; send bazookatooth /sneak <p2>; wait 6; send bazookatooth /invisible <p2>; wait 6; send bazookatooth /sneak <p3>; wait 6; send bazookatooth /invisible <p3>; wait 6; send bazookatooth /sneak <p4>; wait 6; send bazookatooth /invisible <p4>; wait 6; send bazookatooth /sneak <p5>; wait 6; send bazookatooth /invisible <p5>; wait 6; send bazookatooth /sneak <me>; wait 6; send bazookatooth /invisible <me>;  ')
+
+send_command('alias sp1 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /sneak <me>;')
+send_command('alias sp2 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /sneak <p2>; wait 6; send bazookatooth /sneak <me>;')
+send_command('alias sp3 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /sneak <p2>; wait 6; send bazookatooth /sneak <p3>; wait 6; send bazookatooth /sneak <me>;')
+send_command('alias sp4 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /sneak <p2>; wait 6; send bazookatooth /sneak <p3>; wait 6; send bazookatooth /sneak <p4>; wait 6; send bazookatooth /sneak <me>;')
+
+send_command('alias sp5 send bazookatooth /sneak <p1>; wait 6; send bazookatooth /sneak <p2>; wait 6; send bazookatooth /sneak <p3>; wait 6; send bazookatooth /sneak <p4>; wait 6; send bazookatooth /sneak <p5>; wait 6; send bazookatooth /sneak <me>;')
+
+---GEO BUBBLES
+send_command('alias bahh send @geo gs c autoindi haste')
+send_command('alias hfrw send @geo gs c autoindi haste; wait 1; send @geo gs c autogeo frailty; wait 1; send @geo gs c autoentrust wilt ')
+send_command('alias hfew send @geo gs c autoindi haste; wait 1; send @geo gs c autogeo Fend; wait 1; send @geo gs c autoentrust wilt ')
+send_command('alias ffed send @geo gs c autoindi Fury; wait 1; send @geo gs c autogeo Frailty; wait 1; send @geo gs c autoentrust Wilt ')
+send_command('alias bfestr send @geo gs c autoindi Fury; wait 1; send @geo gs c autogeo Barrier; wait 1; send @geo gs c autoentrust STR ')
+
+
+--- ALL TYPES O' BUFFS N SHIT
+send_command('alias kill send @others /assist '..player.name..';wait 0.5;send @brd /attack <t>;wait 0.5;send @brd gs c set Autowsmode On')
+
+--- makes DDs run in and attack
+send_command('alias godds sat alltarget; wait 1; exec DDsAttack; wait 0.1; exec DDsAproach; wait 3; send @all sat stop')
+send_command('alias stopdds sat alltarget; wait 1; exec DDsAttack; wait 0.1; exec DDsAproach; wait 3; send @all sat stop')
+send_command('alias pns send @whm /ma "protectra V" <me>; wait 6; send @whm /ma "Shellra V" <me> ')
+send_command('alias pss send @whm /ma "protect V" '..player.name..'; wait 6; send @whm /ma "Shell V" '..player.name..' ')
+
+send_command('alias mall sta @others /target')
+send_command('alias tall sat alltarget')
+
+
+--- Cures yo
+send_command('alias cme send @whm gs c smartcure '..player.name..'; wait 0.1; send @brd gs c smartcure '..player.name..'; wait 0.1; send @geo gs c smartcure '..player.name..'; wait 0.1; send @sch gs c smartcure '..player.name..' wait 0.1; send @rdm gs c smartcure '..player.name..'  ')
+
+send_command('alias cm3 send @geo gs c smartcure '..player.name..' ')
+
+
+--- EIJIN ALIAS STUFF ---
+--SEND Shortcuts
+send_command('alias sa send @all')
+send_command('alias sac send @all gs c')
+send_command('alias sas send @all exec')
+send_command('alias sao send @others')
+send_command('alias sab send @brd')
+send_command('alias sabe send @brd exec')
+send_command('alias sag send @geo')
+send_command('alias sage send @geo exec')
+
+send_command('alias show gs c showset ')
+
+
+--- COR SHIT ---
+send_command('alias bolt send @cor /boltersroll')
+send_command('alias dubs send @cor /doubleup')
+send_command('alias snake send @cor /snakeeye')
+send_command('alias randy send @cor /randomdeal')
+
+---ROLLS
+send_command('alias french send @all //roller roll')
+
+---RANDOM SHIT ---
+send_command('alias stats input /checkparam <me>')
+send_command('alias naked gs c naked')
+send_command('alias npc dall input /target <stnpc>')
+send_command('alias undress dall lua unload dressup')
+send_command('alias dress dall lua load dressup')
+
+send_command('alias c3test send @drk gs c naked; wait 1; send @drk gs c showset sets.midcast[\'Dread Spikes\']; wait 3; input /c3 misskillface')
+
+send_command('alias 012 send @others gs c odb')
+send_command('alias sublime gs c autofood Sublime Sushi; wait 0.3; gs c cycle autofoodmode')
+send_command('alias omelette gs c autofood Omelette Sandwich; wait 0.3; gs c cycle autofoodmode')
+
+---TEMP ITEM USEAGE
+send_command('alias charm dall cbuffer')
+send_command('alias cbuffer input /item "Lucid Wings II" <me>') --"Charm Buffer"
+
+
+send_command('alias pholla ord pp gs c useitem ring1 "Dim. Ring (holla)" ')
+
+    -- -- Should transition these slot maps to be based off res.slots, but it's very unlikely to change.
+-- default_slot_map = T{'sub','range','ammo','head','neck','left_ear','right_ear','body','hands','left_ring', 'right_ring','back','waist','legs','feet'}
+-- default_slot_map[0]= 'main'
+
+    -- -- Should transition these slot maps to be based off res.slots, but it's very unlikely to change.
+-- default_slot_map = T{'sub','range','ammo','head','body','hands','legs','feet','neck','waist',
+    -- 'left_ear', 'right_ear', 'left_ring', 'right_ring','back'}
+-- default_slot_map[0]= 'main'
+
+
+
+

@@ -1,0 +1,421 @@
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
+	-- Options: Override default values
+    state.OffenseMode:options('Normal','SomeAcc','Acc','FullAcc','Fodder')
+    state.WeaponskillMode:options('Match','Normal','SomeAcc','Acc','FullAcc','Fodder')
+    state.HybridMode:options('Normal','PDT','MDT')
+    state.PhysicalDefenseMode:options('PDT', 'PDTReraise')
+    state.MagicalDefenseMode:options('MDT', 'MDTReraise')
+	state.ResistDefenseMode:options('MEVA')
+	state.IdleMode:options('Normal', 'PDT','Refresh','Reraise')
+    state.ExtraMeleeMode = M{['description']='Extra Melee Mode','None'}
+	state.Weapons:options('ShiningOne','Quint','Staff','Sword_N_Board','None') -- 'Trishula',
+	state.Passive = M{['description'] = 'Passive Mode','None','MP','Twilight'}
+
+    select_default_macro_book()
+	
+	-- Additional local binds
+	send_command('bind ^` input /ja "Hasso" <me>')
+	send_command('bind !` input /ja "Seigan" <me>')
+	send_command('bind ^f11 gs c cycle MagicalDefenseMode')
+	send_command('bind !f11 gs c cycle ExtraMeleeMode')
+	send_command('bind @f7 gs c toggle AutoJumpMode')
+	send_command('bind @` gs c cycle SkillchainMode')
+end
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
+	--------------------------------------
+	-- Start defining the setsbody=DA_VALOROUS_body,
+	--------------------------------------
+	
+	-- Weapons sets
+	-- soon my pretty. soon.... -- sets.weapons.Trishula = {main={name="Trishula",priority=15},sub={name="Utu Grip",priority=1}}
+	sets.weapons.ShiningOne = {main={name="Shining One",priority=15},sub={name="Utu Grip",priority=1}}
+	sets.weapons.Quint = {main={name="Quint Spear",priority=15},sub={name="Utu Grip",priority=1}}
+	sets.weapons.Staff = {main="Malignance Pole",sub={name="Utu Grip",priority=1}}
+	sets.weapons.Sword_N_Board = {main="Naegling",sub="Blurred Shield +1"}
+
+
+	-- Organizer Shit --
+	organizer_items = {
+		echos="Echo Drops",
+		Remedy="Remedy",
+		HolyH2O="Holy Water",
+		shihei="Shihei",
+		sublime="Sublime Sushi",
+		Thrower="Mamoolbane",
+		Pana="Panacea",
+		ShiheBag="Toolbag (Shihe)",
+		EggSando="Om. Sandwich",
+		Desserts="Pear Crepe",
+    }
+	
+	-- Precast Sets
+	-- Precast sets to enhance JAs
+	sets.precast.JA.Angon = {ammo="Angon"} --hands="Ptero. Fin. G. +1"
+	sets.precast.JA.Jump = {ammo="Aurgelmir Orb +1",
+		head="Flam. Zucchetto +2",neck="Ganesha's Mala",ear1="Brutal Earring",ear2="Sherida Earring",
+		body=DA_VALOROUS_body,hands="Crusher's Gauntlets",ring1="Petrov Ring",ring2="Niqmaddu Ring",
+		back=STR_DA_DRG_CAPE,waist="Windbuffet Belt +1",legs="Sulev. Cuisses +1",feet="Flam. Gambieras +2"}
+	sets.precast.JA['Ancient Circle'] = {} --legs="Vishap Brais"
+	sets.precast.JA['High Jump'] = {ammo="Aurgelmir Orb +1",
+		head="Flam. Zucchetto +2",neck="Ganesha's Mala",ear1="Brutal Earring",ear2="Sherida Earring",
+		body=DA_VALOROUS_body,hands="Crusher's Gauntlets",ring1="Petrov Ring",ring2="Niqmaddu Ring",
+		back=STR_DA_DRG_CAPE,waist="Windbuffet Belt +1",legs="Sulev. Cuisses +1",feet="Flam. Gambieras +2"}
+	sets.precast.JA['Soul Jump'] = {ammo="Aurgelmir Orb +1",
+		head="Flam. Zucchetto +2",neck="Ganesha's Mala",ear1="Brutal Earring",ear2="Sherida Earring",
+		body=DA_VALOROUS_body,hands="Crusher's Gauntlets",ring1="Petrov Ring",ring2="Niqmaddu Ring",
+		back=STR_DA_DRG_CAPE,waist="Windbuffet Belt +1",legs="Sulev. Cuisses +1",feet="Flam. Gambieras +2"}
+	sets.precast.JA['Spirit Jump'] = {ammo="Aurgelmir Orb +1",
+		head="Flam. Zucchetto +2",neck="Ganesha's Mala",ear1="Brutal Earring",ear2="Sherida Earring",
+		body=DA_VALOROUS_body,hands="Crusher's Gauntlets",ring1="Petrov Ring",ring2="Niqmaddu Ring",
+		back=STR_DA_DRG_CAPE,waist="Windbuffet Belt +1",legs="Sulev. Cuisses +1",feet="Flam. Gambieras +2"}
+	sets.precast.JA['Super Jump'] = {}
+	sets.precast.JA['Spirit Link'] = {head="Vishap Armet +1"} --head="Vishap Armet",hands="Lnc. Vmbrc. +2"
+	sets.precast.JA['Call Wyvern'] = {body="Pteroslaver Mail"} --body="Ptero. Mail +1"
+	sets.precast.JA['Deep Breathing'] = {} --hands="Ptero. Armet +1"
+	sets.precast.JA['Spirit Surge'] = {"Pteroslaver Mail"} --body="Ptero. Mail +1"
+	sets.precast.JA['Steady Wing'] = {}
+	
+	-- Breath sets
+	sets.precast.JA['Restoring Breath'] = {back=STR_DA_DRG_CAPE}
+	sets.precast.JA['Smiting Breath'] = {back=STR_DA_DRG_CAPE}
+	sets.HealingBreath = {back=STR_DA_DRG_CAPE}
+	sets.SmitingBreath = {back=STR_DA_DRG_CAPE}
+
+	-- Fast cast sets for spells
+	
+	sets.precast.FC = {ammo="Impatiens",
+		head="Carmine Mask +1",neck="Voltsurge Torque",ear1="Enchntr. Earring +1",ear2="Loquacious Earring",
+		body="Taeon Tabard",hands="Leyline Gloves",ring1="Lebeche Ring",ring2="Prolix Ring",
+		back="Moonlight Cape",waist="Flume Belt",legs="Founder's Greaves",feet="Carmine Greaves +1"}
+	
+	-- Waltz set (chr and vit)
+	sets.precast.Waltz = {}
+		
+	-- Don't need any special gear for Healing Waltz.
+	sets.precast.Waltz['Healing Waltz'] = {}
+
+	sets.midcast.Cure = {}
+	
+	sets.Self_Healing = {neck="Phalaina Locket",hands="Buremte Gloves",ring2="Kunaji Ring",waist="Gishdubar Sash"}
+	sets.Cure_Received = {neck="Phalaina Locket",hands="Buremte Gloves",ring2="Kunaji Ring",waist="Gishdubar Sash"}
+	sets.Self_Refresh = {waist="Gishdubar Sash"}
+	
+	-- Midcast Sets
+	sets.midcast.FastRecast = {ammo="Staunch Tathlum",
+		head="Carmine Mask +1",neck="Voltsurge Torque",ear1="Enchntr. Earring +1",ear2="Loquacious Earring",
+		body="Taeon Tabard",hands="Leyline Gloves",ring1="Lebeche Ring",ring2="Prolix Ring",
+		back="Moonlight Cape",waist="Tempus Fugit",legs="Founder's Greaves",feet="Carmine Greaves +1"}
+		
+	-- Put HP+ gear and the AF head to make healing breath trigger more easily with this set.
+	sets.midcast.HB_Trigger = set_combine(sets.midcast.FastRecast, {head="Vishap Armet +1"})
+	
+	-- Weaponskill sets
+
+	-- Default set for any weaponskill that isn't any more specifically defined
+	
+	sets.precast.WS = {ammo="Knobkierrie",
+		head="Flam. Zucchetto +2",neck="Dgn. Collar +1",ear1="Moonshade Earring",ear2="Sherida Earring",
+		body="Gleti's Cuirass",hands="Nyame Gauntlets",ring1="Beithir Ring",ring2="Epaminondas's Ring",
+		back=STR_WSD_DRG_CAPE,waist="Sailfi Belt +1",legs="Gleti's Breeches",feet="Flam. Gambieras +2"}
+		
+	sets.precast.WS.SomeAcc = set_combine(sets.precast.WS, {})
+	sets.precast.WS.Acc = set_combine(sets.precast.WS, {neck="Shulmanu Collar"})
+	sets.precast.WS.FullAcc = set_combine(sets.precast.WS, {neck="Shulmanu Collar"})
+	sets.precast.WS.Fodder = set_combine(sets.precast.WS, {})
+	
+	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
+	sets.precast.WS['Stardiver'] = {ammo="Coiste Bodhar",
+		head="Flam. Zucchetto +2",neck="Dgn. Collar +1",ear1="Moonshade Earring",ear2="Sherida Earring",
+		body="Gleti's Cuirass",hands="Sulev. Gauntlets +2",ring1="Niqmaddu Ring",ring2="Epaminondas's Ring",
+		back=STR_DA_DRG_CAPE,waist="Sailfi Belt +1",legs="Sulev. Cuisses +2",feet="Flam. Gambieras +2"}
+		
+	sets.precast.WS['Stardiver'].SomeAcc = set_combine(sets.precast.WS['Stardiver'], {})
+	sets.precast.WS['Stardiver'].Acc = set_combine(sets.precast.WS['Stardiver'], {})
+	sets.precast.WS['Stardiver'].Fodder = set_combine(sets.precast.WS['Stardiver'], {})
+
+	sets.precast.WS['Drakesbane'] = {ammo="Knobkierrie",
+		head="Gleti's Mask",neck="Dgn. Collar +1",ear1="Thrud Earring",ear2="Sherida Earring",
+		body="Gleti's Cuirass",hands="Gleti's Gauntlets",ring1="Begrudging Ring",ring2="Epaminondas's Ring",
+		back=STR_WSD_DRG_CAPE,waist="Sailfi Belt +1",legs="Gleti's Greaves",feet="Gleti's Boots",}
+		
+	sets.precast.WS['Drakesbane'].SomeAcc = set_combine(sets.precast.WS.Acc, {})
+	sets.precast.WS['Drakesbane'].Acc = set_combine(sets.precast.WS.Acc, {})
+	sets.precast.WS['Drakesbane'].Fodder = set_combine(sets.precast.WS.Fodder, {})
+	
+	sets.precast.WS["Camlann's Torment"] = {ammo="Knobkierrie",
+		head="Nyame Helm",neck="Dgn. Collar +1",ear1="Ishvara Earring",ear2="Thrud Earring",
+		body="Nyame Mail",hands="Ptero. Fin. G. +3",ring1="Epaminondas's Ring",ring2="Niqmaddu Ring",
+		back=STR_WSD_DRG_CAPE,waist="Sailfi Belt +1",legs="Nyame Flanchard",feet="Sulev. Leggings +2"}
+
+	sets.precast.WS['Impulse Drive'] = {
+		ammo="Knobkierrie",
+		--head=WSD_VAL_HEAD,
+		head="Gleti's Mask",
+		body="Gleti's Cuirass",
+		--hands=WSD_VAL_HANDS,
+		hands="Gleti's Gauntlets",
+		--legs="Sulev. Cuisses +2",
+		legs="Gleti's Breeches", --PDT -8%
+		feet="Sulev. Leggings +2",
+		neck="Dgn. Collar +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		--right_ear="Thrud Earring",
+		right_ear="Sherida Earring",
+		left_ring="Niqmaddu Ring",
+		right_ring="Epaminondas's Ring",
+		back=STR_WSD_DRG_CAPE,
+	}
+	
+	
+	
+	sets.precast.WS['Full Swing'] = {ammo="Knobkierrie",
+		head="Nyame Helm",neck="Dgn. Collar +1",left_ear="Moonshade Earring",right_ear="Thrud Earring",
+		body="Nyame Mail",hands="Nyame Gauntlets",left_ring="Niqmaddu Ring",right_ring="Epaminondas's Ring",
+		back=STR_WSD_DRG_CAPE,waist="Sailfi Belt +1",legs="Nyame Flanchard",feet="Nyame Sollerets",}	
+	
+	-- Sets to return to when not performing an action.
+	
+	-- Resting sets
+	sets.resting = {}
+
+	-- Idle sets
+	sets.idle = {
+		ammo="Staunch Tathlum +1",
+		head="Gleti's Mask",
+		body="Gleti's Cuirass",
+		hands="Gleti's Gauntlets",
+		legs="Gleti's Breeches", --PDT -8%
+		feet="Nyame Sollerets", --DT -7%
+		neck="Loricate Torque +1",
+		waist="Flume Belt +1",
+		left_ear="Schere Earring",
+		right_ear="Telos Earring",
+		left_ring="Defending Ring",
+		right_ring="Moonlight Ring",
+		back="Moonbeam Cape",
+	}
+	
+	sets.idle.Town = {
+		ammo="Staunch Tathlum +1",
+		 head="Nyame Helm",
+    body="Nyame Mail",
+    hands="Nyame Gauntlets",
+    legs="Nyame Flanchard",
+    feet="Nyame Sollerets",--DT -7%
+		neck="Dgn. Collar +2",
+		waist="Flume Belt +1",
+		left_ear="Schere Earring",
+		right_ear="Telos Earring",
+		left_ring="Chirich Ring +1",
+		right_ring="Varar Ring +1",
+		back=STR_DA_DRG_CAPE,
+	}
+		
+	sets.idle.Refresh = {ammo="Staunch Tathlum",
+		head="Jumalik Helm",neck="Loricate Torque +1",ear1="Genmei Earring",ear2="Ethereal Earring",
+		body="Jumalik Mail",hands="Sulev. Gauntlets +2",ring1="Defending Ring",ring2="Dark Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Carmine Cuisses +1",feet="Amm Greaves"}
+
+	sets.idle.Weak = set_combine(sets.idle, {head="Twilight Helm",body="Twilight Mail"})
+		
+	sets.idle.Reraise = set_combine(sets.idle, {head="Twilight Helm",body="Twilight Mail"})
+	
+	-- Defense sets
+	sets.defense.PDT = {
+		ammo="Staunch Tathlum +1",
+		head="Gleti's Mask",
+		body="Gleti's Cuirass",
+		hands="Gleti's Gauntlets",
+		legs="Gleti's Breeches", --PDT -8%
+		feet="Nyame Sollerets", --DT -7%
+		neck="Loricate Torque +1",
+		waist="Flume Belt +1",
+		left_ear="Schere Earring",
+		right_ear="Telos Earring",
+		left_ring="Defending Ring",
+		right_ring="Moonlight Ring",
+		back="Moonbeam Cape",
+	}
+		
+	sets.defense.PDTReraise = set_combine(sets.defense.PDT, {head="Twilight Helm",body="Twilight Mail"})
+
+	sets.defense.MDT = {
+		ammo="Staunch Tathlum +1",
+		head="Gleti's Mask",
+		body="Gleti's Cuirass",
+		hands="Gleti's Gauntlets",
+		legs="Gleti's Breeches", --PDT -8%
+		feet="Nyame Sollerets", --DT -7%
+		neck="Loricate Torque +1",
+		waist="Flume Belt +1",
+		left_ear="Schere Earring",
+		right_ear="Telos Earring",
+		left_ring="Defending Ring",
+		right_ring="Moonlight Ring",
+		back="Moonbeam Cape",
+	}
+		
+	sets.defense.MDTReraise = set_combine(sets.defense.MDT, {head="Twilight Helm",body="Twilight Mail"})
+		
+	sets.defense.MEVA = {
+		ammo="Staunch Tathlum +1",
+		 head="Nyame Helm",
+    body="Nyame Mail",
+    hands="Nyame Gauntlets",
+    legs="Nyame Flanchard",
+    feet="Nyame Sollerets",--DT -7%
+		neck="Loricate Torque +1",
+		waist="Flume Belt +1",
+		left_ear="Schere Earring",
+		right_ear="Telos Earring",
+		left_ring="Defending Ring",
+		right_ring="Moonlight Ring",
+		back=STR_DA_DRG_CAPE,
+	}
+
+	sets.Kiting = {legs="Carmine Cuisses +1"}
+	sets.Reraise = {head="Twilight Helm",body="Twilight Mail"}
+	sets.buff.Doom = set_combine(sets.buff.Doom, {})
+	sets.buff.Sleep = {neck="Vim Torque +1"}
+	
+    -- Extra defense sets.  Apply these on top of melee or defense sets.
+    sets.passive.MP = {ear2="Ethereal Earring",waist="Flume Belt"}
+    sets.passive.Twilight = {head="Twilight Helm", body="Twilight Mail"}
+	sets.TreasureHunter = set_combine(sets.TreasureHunter, {})
+	
+
+
+	-- Swap to these on Moonshade using WS if at 3000 TP
+	sets.MaxTP = {ear1="Lugra Earring +1",ear2="Sherida Earring",}
+	sets.AccMaxTP = {ear1="Zennaroi Earring",ear2="Telos Earring"}
+	sets.AccDayMaxTPWSEars = {ear1="Zennaroi Earring",ear2="Telos Earring"}
+	sets.DayMaxTPWSEars = {ear1="Brutal Earring",ear2="Sherida Earring",}
+	sets.AccDayWSEars = {ear1="Zennaroi Earring",ear2="Telos Earring"}
+	sets.DayWSEars = {ear1="Moonshade Earring",ear2="Sherida Earring",}
+	
+	-- Engaged sets
+
+	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
+	-- sets if more refined versions aren't defined.
+	-- If you create a set with both offense and defense modes, the offense mode should be first.
+	-- EG: sets.engaged.Dagger.Accuracy.Evasion
+	
+	-- Normal melee group
+
+	sets.engaged = {
+		ammo="Coiste Bodhar",
+		head="Flam. Zucchetto +2",
+		body=DA_VALOROUS_body,
+		hands="Sulev. Gauntlets +2",
+		legs=STP_VALOROUS_LEGS,
+		feet="Flam. Gambieras +2",
+		neck="Vim Torque +1",
+		waist="Sailfi Belt +1",
+		--waist="Ioskeha Belt +1",
+		left_ear="Telos Earring",
+		right_ear="Sherida Earring",
+		left_ring="Niqmaddu Ring",
+		right_ring="Moonlight Ring",
+		back=STR_DA_DRG_CAPE,
+	}
+    sets.engaged.SomeAcc = {ammo="Aurgelmir Orb +1",
+		head="Flam. Zucchetto +2",neck="Shulmanu Collar",ear1="Brutal Earring",ear2="Sherida Earring",
+		body=DA_VALOROUS_body,hands="Sulev. Gauntlets +2",ring1="Regal Ring",ring2="Niqmaddu Ring",
+		back=STR_DA_DRG_CAPE,waist="Ioskeha Belt",legs="Sulev. Cuisses +1",feet="Flam. Gambieras +2"}
+	sets.engaged.Acc = {ammo="Aurgelmir Orb +1",
+		head="Flam. Zucchetto +2",neck="Shulmanu Collar",ear1="Digni. Earring",ear2="Telos Earring",
+		body=DA_VALOROUS_body,hands="Sulev. Gauntlets +2",ring1="Ramuh Ring +1",ring2="Niqmaddu Ring",
+		back=STR_DA_DRG_CAPE,waist="Ioskeha Belt",legs="Sulev. Cuisses +1",feet="Flam. Gambieras +2"}
+    sets.engaged.FullAcc = {ammo="Aurgelmir Orb +1",
+		head="Flam. Zucchetto +2",neck="Shulmanu Collar",ear1="Zennaroi Earring",ear2="Telos Earring",
+		body=DA_VALOROUS_body,hands="Sulev. Gauntlets +2",ring1="Ramuh Ring +1",ring2="Ramuh Ring +1",
+		back=STR_DA_DRG_CAPE,waist="Ioskeha Belt",legs="Sulev. Cuisses +1",feet="Flam. Gambieras +2"}
+    sets.engaged.Fodder = {ammo="Aurgelmir Orb +1",
+		head="Flam. Zucchetto +2",neck="Ganesha's Mala",ear1="Brutal Earring",ear2="Sherida Earring",
+		body=DA_VALOROUS_body,hands="Sulev. Gauntlets +2",ring1="Petrov Ring",ring2="Niqmaddu Ring",
+		back=STR_DA_DRG_CAPE,waist="Ioskeha Belt",legs="Sulev. Cuisses +1",feet="Flam. Gambieras +2"}
+
+    sets.engaged.AM = {}
+    sets.engaged.AM.SomeAcc = {}
+	sets.engaged.AM.Acc = {}
+    sets.engaged.AM.FullAcc = {}
+    sets.engaged.AM.Fodder = {}
+	
+    sets.engaged.PDT = {
+		ammo="Staunch Tathlum +1",
+		head="Flam. Zucchetto +2",
+		body="Gleti's Cuirass",
+		hands="Sulev. Gauntlets +2",
+		legs=STP_VALOROUS_LEGS,
+		feet="Flam. Gambieras +2",
+		neck="Loricate Torque +1",
+		waist="Ioskeha Belt +1",
+		left_ear="Telos Earring",
+		right_ear="Sherida Earring",
+		left_ring="Defending Ring",
+		right_ring="Moonlight Ring",
+		back=STR_DA_DRG_CAPE,
+	}
+	
+    sets.engaged.MDT = {ammo="Staunch Tathlum +1",
+		head="Nyame Helm",neck="Dgn. Collar +1",left_ear="Telos Earring",right_ear="Sherida Earring",
+		body="Nyame Mail",hands="Nyame Gauntlets",left_ring="Niqmaddu Ring",right_ring="Chirich Ring",
+		back=STR_DA_DRG_CAPE,waist="Ioskeha Belt +1",legs="Nyame Flanchard",feet="Nyame Sollerets",}
+	
+    sets.engaged.SomeAcc.PDT = {}
+	sets.engaged.Acc.PDT = {}
+    sets.engaged.FullAcc.PDT = {}
+    sets.engaged.Fodder.PDT = {}
+	
+    sets.engaged.AM.PDT = {}
+    sets.engaged.AM.SomeAcc.PDT = {}
+	sets.engaged.AM.Acc.PDT = {}
+    sets.engaged.AM.FullAcc.PDT = {}
+    sets.engaged.AM.Fodder.PDT = {}
+		
+	--[[ Melee sets for in Adoulin, which has an extra 2% Haste from Ionis.
+	
+    sets.engaged.Adoulin = {}
+    sets.engaged.Adoulin.SomeAcc = {}
+	sets.engaged.Adoulin.Acc = {}
+    sets.engaged.Adoulin.FullAcc = {}
+    sets.engaged.Adoulin.Fodder = {}
+
+    sets.engaged.Adoulin.AM = {}
+    sets.engaged.Adoulin.AM.SomeAcc = {}
+	sets.engaged.Adoulin.AM.Acc = {}
+    sets.engaged.Adoulin.AM.FullAcc = {}
+    sets.engaged.Adoulin.AM.Fodder = {}
+	
+    sets.engaged.Adoulin.PDT = {}
+    sets.engaged.Adoulin.SomeAcc.PDT = {}
+	sets.engaged.Adoulin.Acc.PDT = {}
+    sets.engaged.Adoulin.FullAcc.PDT = {}
+    sets.engaged.Adoulin.Fodder.PDT = {}
+	
+    sets.engaged.Adoulin.AM.PDT = {}
+    sets.engaged.Adoulin.AM.SomeAcc.PDT = {}
+	sets.engaged.Adoulin.AM.Acc.PDT = {}
+    sets.engaged.Adoulin.AM.FullAcc.PDT = {}
+    sets.engaged.Adoulin.AM.Fodder.PDT = {}
+	]]
+
+end
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+    -- Default macro set/book
+    if player.sub_job == 'WAR' then
+        set_macro_page(1, 14)
+    elseif player.sub_job == 'SAM' then
+        set_macro_page(1, 14)
+    elseif player.sub_job == 'BLU' then
+        set_macro_page(1, 14)
+    else
+        set_macro_page(1, 14)
+    end
+end

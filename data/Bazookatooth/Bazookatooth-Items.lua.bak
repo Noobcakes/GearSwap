@@ -1,0 +1,170 @@
+--Gearsets your character will use among multiple jobs.
+
+sets.Sheltered = {}--ring2="Sheltered Ring"
+sets.Capacity = {back="Mecisto. Mantle"}
+
+sets.buff.Doom = {neck="Nicander's Necklace",waist="Gishdubar Sash",} --head="Volte Cap",hands="Volte Bracers",legs="Volte Hose",feet="Volte Boots",ring1="Eshmun's Ring",ring2="Eshmun's Ring"
+sets.TreasureHunter = {waist="Chaac Belt"}--waist="Chaac Belt"
+
+sets.precast.Item['Hallowed Water'] = {}
+sets.precast.Item['Holy Water'] = {}
+
+gear.default.obi_waist = "Eschan Stone"
+
+
+
+
+--Augmented items that you'll use among multiple jobs.
+
+---Weapons---
+	Magic_BP_Staff={ name="Espiritus", augments={'Enmity-6','Pet: "Mag.Atk.Bns."+30','Pet: Damage taken -4%',}}
+	Skill_BP_Staff={ name="Espiritus", augments={'Summoning magic skill +15','Pet: Mag. Acc.+30','Pet: Damage taken -4%',}}
+
+	MAB_NIBIRU_ONE={ name="Nibiru Cudgel", augments={'MP+50','INT+10','"Mag.Atk.Bns."+15',}}
+	FC_NIBIRU={ name="Nibiru Cudgel", augments={'Accuracy+15','Mag. Acc.+15','"Fast Cast"+3',}}
+	CURE_NIBIRU={ name="Nibiru Cudgel", augments={'MND+10','Mag. Acc.+15','"Cure" potency +15%',}}
+
+	REFRESH_SOLSTICE={ name="Solstice", augments={'INT+15','"Mag.Atk.Bns."+10','"Refresh"+1',}}
+	BUBBLE_SOLSTICE={ name="Solstice", augments={'Mag. Acc.+20','Pet: Damage taken -4%','"Fast Cast"+5',}}
+	
+	QA_LINOS={ name="Linos", augments={'Accuracy+13','"Store TP"+3','Quadruple Attack +3',}}
+	WSD_LINOS={ name="Linos", augments={'Accuracy+12','Weapon skill damage +3%','STR+5 VIT+5',}}
+	
+	ENHANCING_GADA={ name="Gada", augments={'Enh. Mag. eff. dur. +6','VIT+1',}}
+	
+	CURE_POT_QUELLERr={ name="Queller Rod", augments={'Healing magic skill +15','"Cure" potency +10%','"Cure" spellcasting time -7%',}}
+	
+	Ammurapi15={ name="Ammurapi Shield" ,priority=15}
+
+--- SKIRMISH GEAR ---
+	telchine_enhancing_head={ name="Telchine Cap", augments={'"Fast Cast"+5','Enh. Mag. eff. dur. +10',}}
+	telchine_enhancing_body={ name="Telchine Chas.", augments={'"Fast Cast"+4','Enh. Mag. eff. dur. +9',}}
+	telchine_enhancing_hands={ name="Telchine Gloves", augments={'"Fast Cast"+4','Enh. Mag. eff. dur. +10',}}
+	telchine_enhancing_legs={ name="Telchine Braconi", augments={'"Fast Cast"+5','Enh. Mag. eff. dur. +10',}}
+	telchine_enhancing_feet={ name="Telchine Pigaches", augments={'"Fast Cast"+5','Enh. Mag. eff. dur. +10',}}
+	
+	PUP_TAEON_HEAD={ name="Taeon Chapeau", augments={'Pet: Attack+17 Pet: Rng.Atk.+17','Pet: "Dbl. Atk."+5','Pet: Damage taken -4%',}}
+    PUP_TAEON_BODY={ name="Taeon Tabard", augments={'Pet: Attack+22 Pet: Rng.Atk.+22','Pet: "Dbl. Atk."+5','Pet: Damage taken -3%',}}
+    PUP_TAEON_HANDS={ name="Taeon Gloves", augments={'Pet: Accuracy+18 Pet: Rng. Acc.+18','Pet: "Dbl. Atk."+5','Pet: Damage taken -4%',}}
+    PUP_TAEON_LEGS={ name="Taeon Tights", augments={'Pet: Accuracy+25 Pet: Rng. Acc.+25','Pet: "Dbl. Atk."+5','Pet: Damage taken -3%',}}
+    PUP_TAEON_FEET={ name="Taeon Boots", augments={'Pet: Accuracy+22 Pet: Rng. Acc.+22','Pet: "Dbl. Atk."+5','Pet: Damage taken -4%',}}
+
+--- HERCULEAN GEAR ---
+	--HEAD--
+	WSD_Herc_Head={ name="Herculean Helm", augments={'Accuracy+3 Attack+3','Pet: "Regen"+4','Weapon skill damage +6%',}}
+	TA_HERC_HEAD={ name="Herculean Helm", augments={'"Triple Atk."+4','DEX+5','Accuracy+12',}}
+	
+
+	
+	--FEET--
+	TH_Herc_Boots={ name="Herculean Boots", augments={'Pet: "Mag.Atk.Bns."+30','Magic dmg. taken -1%','"Treasure Hunter"+2','Accuracy+6 Attack+6','Mag. Acc.+1 "Mag.Atk.Bns."+1',}}
+	
+	WSD_HERC_FEET={ name="Herculean Boots", augments={'Attack+28','Weapon skill damage +4%','AGI+8','Accuracy+13',}}
+
+	TA_Herc_Feet={ name="Herculean Boots", augments={'Attack+19','"Triple Atk."+4','AGI+10','Accuracy+12',}}
+
+	REFRESH_HERC_BOOTS={ name="Herculean Boots", augments={'Rng.Atk.+30','Mag. crit. hit dmg. +10%','"Refresh"+1',}}
+
+	FC_HERC_FEET={ name="Herculean Boots", augments={'Mag. Acc.+7','"Fast Cast"+6',}}
+
+--- MERLINIC GEAR ---
+
+	---HEAD---
+	FC_MERLIN_HEAD={ name="Merlinic Hood", augments={'"Fast Cast"+7',}}
+	MAB_MERLIN_HEAD={ name="Merlinic Hood", augments={'"Mag.Atk.Bns."+28','Magic burst dmg.+8%','INT+6','Mag. Acc.+15',}}
+
+	---BODY---
+	MB_MERLIN_BODY={ name="Merlinic Jubbah", augments={'"Mag.Atk.Bns."+29','Magic burst dmg.+9%','CHR+4',}}
+
+	--HANDS--
+
+	FC_MERLIN_HANDS={ name="Merlinic Dastanas", augments={'Mag. Acc.+14 "Mag.Atk.Bns."+14','"Fast Cast"+5','Mag. Acc.+6',}}
+	
+	---LEGS---
+	MB_MERLIN_LEGS={ name="Merlinic Shalwar", augments={'Mag. Acc.+25 "Mag.Atk.Bns."+25','Magic burst dmg.+8%','Mag. Acc.+14','"Mag.Atk.Bns."+11',}}
+	
+	---FEET---
+	MAB_MERLIN_FEET={ name="Merlinic Crackows", augments={'"Mag.Atk.Bns."+25','Magic burst dmg.+11%','INT+4','Mag. Acc.+13',}}
+	FC_MERLIN_feet={ name="Merlinic Crackows", augments={'"Fast Cast"+7','CHR+9','Mag. Acc.+5','"Mag.Atk.Bns."+1',}}
+--- CHIRONIC GEAR ---	
+	
+	---HANDS---
+	MAB_CHIRONIC_HANDS={ name="Chironic Gloves", augments={'"Mag.Atk.Bns."+30','"Fast Cast"+4','INT+8','Mag. Acc.+15',}}
+	REFRESH_CHIRONIC_HANDS={ name="Chironic Gloves", augments={'Pet: "Mag.Atk.Bns."+24','Pet: Phys. dmg. taken -3%','"Refresh"+2','Mag. Acc.+4 "Mag.Atk.Bns."+4',}}
+	
+--- VALOROUS GEAR ---
+
+	---BODY---
+	DA_VALOROUS_body={ name="Valorous Mail", augments={'"Dbl.Atk."+5','STR+4','Accuracy+15',}}
+	
+	---HANDS---
+	WSD_VAL_HANDS={ name="Valorous Mitts", augments={'Accuracy+10','Weapon skill damage +3%','VIT+11','Attack+11',}}
+	
+	---LEGS---
+	STP_VALOROUS_LEGS={ name="Valorous Hose", augments={'Accuracy+29','"Store TP"+7','MND+6',}}
+	
+--- ODYSSEAN GEAR ---
+	---HANDS---
+	WSD_ODDY_HANDS={ name="Odyssean Gauntlets", augments={'Accuracy+10 Attack+10','Weapon skill damage +3%','STR+10','Attack+11',}}
+	
+	
+	---LEGS---
+	STP_ODDY_LEGS={ name="Odyssean Cuisses", augments={'Accuracy+27','"Store TP"+7',}}
+	WSD_ODDY_LEGS={ name="Odyssean Cuisses", augments={'Accuracy+19','Weapon skill damage +5%','INT+6',}}
+
+
+--- ABJURATION GEAR ---
+
+	ATT_Adhemar_Head={ name="Adhemar Bonnet +1", augments={'STR+12','DEX+12','Attack+20',}}
+
+	ATT_Adhemar_Body={ name="Adhemar Jacket +1", augments={'STR+12','DEX+12','Attack+20',}}
+
+	ATT_Adhemar_Hands={ name="Adhemar Wrist. +1", augments={'STR+12','DEX+12','Attack+20',}}
+	
+	
+	MAB_APOGEE_LEGS={ name="Apogee Slacks +1", augments={'MP+80','Pet: "Mag.Atk.Bns."+35','Blood Pact Dmg.+8',}}
+	PHYS_APOGEE_LEGS={ name="Apogee Slacks +1", augments={'Pet: STR+20','Blood Pact Dmg.+14','Pet: "Dbl. Atk."+4',}}
+	
+	
+--- JSE CAPES ---
+	
+	---MNK
+	STR_DA_MNK_CAPE={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}}  --MAXXED OUT
+	--STR_WSD_MNK_CAPE
+	
+	---WAR
+	DA_STR_WAR_CAPE={ name="Cichol's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}}  --MAXXED OUT
+	WSD_STR_WAR_CAPE={ name="Cichol's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%',}}  --MAXXED OUT
+	WSD_VIT_WAR_CAPE={ name="Cichol's Mantle", augments={'VIT+20','Accuracy+20 Attack+20','VIT+10','Weapon skill damage +10%',}}  --MAXXED OUT
+	DA_DEX_WAR_back={ name="Cichol's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}}  --MAXXED OUT
+	
+	---SCH
+	SCH_NUKE_BACK ={ name="Lugh's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10',}}
+	
+	---THF
+	CRIT_DEX_THF_CAPE={ name="Toutatis's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','Crit.hit rate+10','Phys. dmg. taken-10%',}}  --MAXXED OUT
+	WSD_DEX_THF_CAPE={ name="Toutatis's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','Weapon skill damage +10%',}}  --MAXXED OUT
+	STP_DEX_THF_back={ name="Toutatis's Cape", augments={'DEX+20','Accuracy+20 Attack+20','"Store TP"+10','Phys. dmg. taken-10%',}}
+	
+	---BRD
+	FC_MACC_BRD_CAPE={ name="Intarabus's Cape", augments={'CHR+20','Mag. Acc+20 /Mag. Dmg.+20','"Fast Cast"+10',}}  --MAXXED OUT
+	WSD_STR_BRD_CAPE={ name="Intarabus's Cape", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%',}}  --MAXXED OUT
+	STP_DEX_BRD_CAPE={ name="Intarabus's Cape", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+6','"Store TP"+10','Phys. dmg. taken-10%',}}
+	
+	---GEO
+	MAB_INT_GEO_CAPE={ name="Nantosuelta's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10',}}
+	GARBAGE_back={ name="Nantosuelta's Cape", augments={'HP+60','Eva.+20 /Mag. Eva.+20','Pet: "Regen"+10','Phys. dmg. taken-10%',}}
+	
+	---BLU
+	MAB_INT_BLU_CAPE={ name="Rosmerta's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10',}}
+	DA_DEX_BLU_CAPE={ name="Rosmerta's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}}  --MAXXED OUT
+	WSD_STR_BLU_CAPE={ name="Rosmerta's Cape", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%',}}  --MAXXED OUT
+	CRIT_DEX_BLU_back={ name="Rosmerta's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','Crit.hit rate+10',}}  --MAXXED OUT
+	
+	---DRG
+	STR_DA_DRG_CAPE={ name="Brigantia's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}} --MAXXED OUT
+	STR_WSD_DRG_CAPE={ name="Brigantia's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%',}}  --MAXXED OUT
+	
+	---WHM
+	FC_MND_WHM_back={ name="Alaunus's Cape", augments={'MND+20','Eva.+20 /Mag. Eva.+20','"Fast Cast"+10',}}
+	

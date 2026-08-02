@@ -1,0 +1,481 @@
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
+	-- Options: Override default values
+    state.OffenseMode:options('Normal','Acc','FullAcc')
+    state.HybridMode:options('Normal','PDT')
+    state.RangedMode:options('Normal', 'Acc')
+    state.WeaponskillMode:options('Match','Normal','Acc','FullAcc')
+	state.IdleMode:options('Normal','Refresh')
+    state.PhysicalDefenseMode:options('PDT')
+	state.MagicalDefenseMode:options('MDT')
+	state.ResistDefenseMode:options('MEVA')
+	state.Weapons:options('Twashtar','LowBuff','Naegling','None')
+
+	state.AmbushMode = M(false, 'Ambush Mode')
+
+
+    -- Additional local binds
+    send_command('bind ^` input /ja "Flee" <me>')
+    send_command('bind !` input /ra <t>')
+	send_command('bind @` gs c cycle SkillchainMode')
+	send_command('bind @f10 gs c toggle AmbushMode')
+	send_command('bind !backspace input /ja "Hide" <me>')
+	send_command('bind ^\\\\ input /ja "Despoil" <t>')
+	send_command('bind !\\\\ input /ja "Mug" <t>')
+
+    select_default_macro_book()
+end
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
+    --------------------------------------
+    -- Special sets (required by rules)
+    --------------------------------------
+	organizer_items = {
+		echos="Echo Drops",
+		Remedy="Remedy",
+		HolyH2O="Holy Water",
+		shihei="Shihei",
+		sublime="Sublime Sushi",
+		Thrower="Mamoolbane",
+		Pana="Panacea",
+		ShiheBag="Toolbag (Shihe)",
+		EggSando="Om. Sandwich",
+		Desserts="Pear Crepe",
+    }
+	sets.TreasureHunter = set_combine(sets.TreasureHunter, {}) --feet="Skulk. Poulaines +1",hands="Plun. Armlets +3"
+    sets.ExtraRegen = {}
+    sets.Kiting = {}--feet="Pill. Poulaines +3"
+
+	sets.buff.Doom = set_combine(sets.buff.Doom, {})
+	sets.buff.Sleep = {}--head="Frenzy Sallet"
+	
+    sets.buff['Sneak Attack'] = {}
+    sets.buff['Trick Attack'] = {}
+	sets.buff['Feint'] = {}--legs="Plun. Culottes +3"
+		
+    -- Extra Melee sets.  Apply these on top of melee sets.
+	sets.Ambush = {} --body="Plunderer's Vest +1"
+	
+	-- Weapons sets
+	sets.weapons.Twashtar = {main="Tauret",sub="Gleti's Knife"}
+	sets.weapons.LowBuff = {main={name="Tauret",priority=1},sub="Blurred Knife +1"}
+	sets.weapons.Naegling = {main="Kaja Sword",sub="Gleti's Knife"}
+	--sets.weapons.MagicWeapons = {main="Tauret",sub="Naegling"}
+	--sets.weapons.Throwing = {main="Aeneas",sub="Taming Sari",range="Comet Tail",ammo=empty}
+	
+	sets.precast.JA.Provoke = sets.TreasureHunter
+
+    --------------------------------------
+    -- Precast sets
+    --------------------------------------
+
+    -- Precast sets to enhance JAs
+    sets.precast.JA['Collaborator'] = {} --head="Skulker's Bonnet"
+    sets.precast.JA['Accomplice'] = {} --head="Skulker's Bonnet"
+    sets.precast.JA['Flee'] = {}--feet="Pill. Poulaines +3"
+    sets.precast.JA['Hide'] = {}--body="Pillager's Vest +3"
+    sets.precast.JA['Conspirator'] = {} --body="Skulker's Vest"
+    sets.precast.JA['Steal'] = {}--hands="Pill. Armlets +1"
+	sets.precast.JA['Mug'] = {}
+    sets.precast.JA['Despoil'] = {}--legs="Skulker's Culottes",feet="Skulk. Poulaines +1"
+    sets.precast.JA['Perfect Dodge'] = {}--hands="Plun. Armlets +3"
+    sets.precast.JA['Feint'] = {}--legs="Plun. Culottes +3"
+
+    sets.precast.JA['Sneak Attack'] = sets.buff['Sneak Attack']
+    sets.precast.JA['Trick Attack'] = sets.buff['Trick Attack']
+
+    -- Fast cast sets for spells
+    sets.precast.FC = {
+		ammo="Impatiens",
+		head=WSD_Herc_Head,
+		body="Taeon Tabard",
+		hands="Leyline Gloves",
+		legs="Nyame Flanchard",
+		--legs="Plun. Culottes +3",
+		feet=FC_HERC_FEET,
+		neck="Loricate Torque +1",
+		left_ear="Etiolation Earring",
+		right_ear="Loquacious Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Rahab Ring"
+	}
+
+    sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads",body="Passion Jacket"})
+
+    -- Ranged snapshot gear
+    sets.precast.RA = {range="Halakaala"}
+
+    -- Weaponskill sets
+
+    -- Default set for any weaponskill that isn't any more specifically defined
+    sets.precast.WS = {
+		ammo="Aurgelmir Orb",
+		head=WSD_Herc_Head,
+		body=ATT_Adhemar_Body,
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		--legs="Plun. Culottes +3",
+		feet=WSD_HERC_FEET,
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Ramuh Ring +1",
+		back=WSD_DEX_THF_CAPE,
+	}
+    sets.precast.WS.Acc = set_combine(sets.precast.WS, {})
+	sets.precast.WS.FullAcc = set_combine(sets.precast.WS, {})
+
+    -- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
+    sets.precast.WS["Rudra's Storm"] = {
+		ammo="Aurgelmir Orb",
+		head=WSD_Herc_Head,
+		body=ATT_Adhemar_Body,
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		--legs="Plun. Culottes +3",
+		feet=WSD_HERC_FEET,
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Ramuh Ring +1",
+		back=WSD_DEX_THF_CAPE,
+	}
+	
+    sets.precast.WS["Rudra's Storm"].Acc = set_combine(sets.precast.WS["Rudra's Storm"], {})
+	sets.precast.WS["Rudra's Storm"].FullAcc = set_combine(sets.precast.WS["Rudra's Storm"], {})
+    sets.precast.WS["Rudra's Storm"].SA = set_combine(sets.precast.WS["Rudra's Storm"], {
+		ammo="Aurgelmir Orb",
+		head="Adhemar Bonnet +1",
+		body="Meg. Cuirie +1",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Malignance Boots",
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Ramuh Ring +1",
+		back=WSD_DEX_THF_CAPE,
+		}
+	)
+    sets.precast.WS["Rudra's Storm"].TA = set_combine(sets.precast.WS["Rudra's Storm"], {
+		ammo="Aurgelmir Orb",
+		head="Adhemar Bonnet +1",
+		body="Meg. Cuirie +1",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Malignance Boots",
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Ramuh Ring +1",
+		back=WSD_DEX_THF_CAPE,
+		}
+	)
+    sets.precast.WS["Rudra's Storm"].SATA = set_combine(sets.precast.WS["Rudra's Storm"], {
+		ammo="Aurgelmir Orb",
+		head="Adhemar Bonnet +1",
+		body="Meg. Cuirie +1",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Malignance Boots",
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Ramuh Ring +1",
+		back=WSD_DEX_THF_CAPE,
+		}
+	)
+
+    sets.precast.WS["Mandalic Stab"] = set_combine(sets.precast.WS, {})
+    sets.precast.WS["Mandalic Stab"].Acc = set_combine(sets.precast.WS["Mandalic Stab"], {})
+	sets.precast.WS["Mandalic Stab"].FullAcc = set_combine(sets.precast.WS["Mandalic Stab"], {})
+    sets.precast.WS["Mandalic Stab"].SA = set_combine(sets.precast.WS["Mandalic Stab"], {
+		ammo="Aurgelmir Orb",
+		head="Adhemar Bonnet +1",
+		body="Meg. Cuirie +1",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Malignance Boots",
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Ramuh Ring +1",
+		back=WSD_DEX_THF_CAPE,
+		}
+	)
+    sets.precast.WS["Mandalic Stab"].TA = set_combine(sets.precast.WS["Mandalic Stab"], {
+		ammo="Aurgelmir Orb",
+		head="Adhemar Bonnet +1",
+		body="Meg. Cuirie +1",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Malignance Boots",
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Ramuh Ring +1",
+		back=WSD_DEX_THF_CAPE,
+		}
+	)
+    sets.precast.WS["Mandalic Stab"].SATA = set_combine(sets.precast.WS["Mandalic Stab"], {
+		ammo="Aurgelmir Orb",
+		head="Adhemar Bonnet +1",
+		body="Meg. Cuirie +1",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Malignance Boots",
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Ramuh Ring +1",
+		back=WSD_DEX_THF_CAPE,
+		}
+	)
+
+    sets.precast.WS["Shark Bite"] = set_combine(sets.precast.WS, {})
+    sets.precast.WS["Shark Bite"].Acc = set_combine(sets.precast.WS["Shark Bite"], {})
+	sets.precast.WS["Shark Bite"].FullAcc = set_combine(sets.precast.WS["Shark Bite"], {})
+    sets.precast.WS["Shark Bite"].SA = set_combine(sets.precast.WS["Shark Bite"], {ammo="Yetshila +1"})
+    sets.precast.WS["Shark Bite"].TA = set_combine(sets.precast.WS["Shark Bite"], {ammo="Yetshila +1"})
+    sets.precast.WS["Shark Bite"].SATA = set_combine(sets.precast.WS["Shark Bite"], {ammo="Yetshila +1"})
+	
+    sets.precast.WS['Evisceration'] = {
+		ammo="Yetshila +1",
+		head=ATT_Adhemar_Head,
+		body="Gleti's Cuirass",
+		hands="Mummu Wrists +1",
+		legs="Gleti's Breeches",
+		feet="Gleti's Boots",
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Odr Earring",
+		right_ear="Sherida Earring",
+		left_ring="Begrudging Ring",
+		right_ring="Epona's Ring",
+		back=CRIT_DEX_THF_CAPE,
+	}
+    sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {})
+	sets.precast.WS['Evisceration'].FullAcc = set_combine(sets.precast.WS['Evisceration'], {})
+    sets.precast.WS['Evisceration'].SA = set_combine(sets.precast.WS['Evisceration'], {})
+    sets.precast.WS['Evisceration'].TA = set_combine(sets.precast.WS['Evisceration'], {})
+    sets.precast.WS['Evisceration'].SATA = set_combine(sets.precast.WS['Evisceration'], {})
+	
+    sets.precast.WS["Exenterator"] = set_combine(sets.precast.WS, {})
+    sets.precast.WS["Exenterator"].Acc = set_combine(sets.precast.WS["Exenterator"], {})
+	sets.precast.WS["Exenterator"].FullAcc = set_combine(sets.precast.WS["Exenterator"], {})
+    sets.precast.WS["Exenterator"].SA = set_combine(sets.precast.WS["Exenterator"], {ammo="Yetshila +1"})
+    sets.precast.WS["Exenterator"].TA = set_combine(sets.precast.WS["Exenterator"], {ammo="Yetshila +1"})
+    sets.precast.WS["Exenterator"].SATA = set_combine(sets.precast.WS["Exenterator"], {ammo="Yetshila +1"})
+
+	sets.precast.WS["Mercy Stroke"] = sets.precast.WS["Rudra's Storm"]
+
+    -- sets.precast.WS['Last Stand'] = {
+        -- head="Mummu Bonnet +2",neck="Fotia Gorget",ear1="Clearview Earring",ear2="Neritic Earring",
+        -- body="Mummu Jacket +2",hands="Mummu Wrists +2",ring1="Apate Ring",ring2="Regal Ring",
+        -- back=WSD_DEX_THF_CAPE,waist="Fotia Belt",legs="Mummu Kecks +2",feet="Mummu Gamash. +2"}
+
+    sets.precast.WS['Aeolian Edge'] = {    
+		ammo="Seething Bomblet +1",
+		head="Nyame Helm",
+		body="Nyame Mail",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets",
+		neck="Sanctity Necklace",
+		waist="Eschan Stone",
+		left_ear="Friomisi Earring",
+		right_ear="Moonshade Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Beithir Ring",
+		back=WSD_DEX_THF_CAPE,
+	}
+
+    sets.precast.WS['Aeolian Edge'].TH = set_combine(sets.precast.WS['Aeolian Edge'], sets.TreasureHunter)
+
+    --------------------------------------
+    -- Midcast sets
+    --------------------------------------
+
+    sets.midcast.FastRecast = sets.precast.FC
+
+    -- Specific spells
+	sets.midcast.Utsusemi = set_combine(sets.midcast.FastRecast, {back="Mujin Mantle"})
+
+	sets.midcast.Dia = set_combine(sets.midcast.FastRecast, sets.TreasureHunter)
+	sets.midcast.Diaga = set_combine(sets.midcast.FastRecast, sets.TreasureHunter)
+	sets.midcast['Dia II'] = set_combine(sets.midcast.FastRecast, sets.TreasureHunter)
+	sets.midcast.Bio = set_combine(sets.midcast.FastRecast, sets.TreasureHunter)
+	sets.midcast['Bio II'] = set_combine(sets.midcast.FastRecast, sets.TreasureHunter)
+
+    -- Ranged gear
+
+    sets.midcast.RA = {
+        head="Nyame Helm",
+		body="Malignance Tabard",
+		hands="Malignance Gloves",
+		legs="Nyame Flanchard",
+		feet="Malignance Boots",
+		neck="Clotharius Torque",
+		waist="Eschan Stone",
+		left_ear="Enervating Earring",
+		right_ear="Telos Earring",
+		left_ring="Moonlight Ring",
+		right_ring="Moonbeam Ring",
+		back=CRIT_DEX_THF_CAPE,
+	}
+
+    sets.midcast.RA.Acc = sets.midcast.RA 
+
+    --------------------------------------
+    -- Idle/resting/defense sets
+    --------------------------------------
+
+    -- Resting sets
+    sets.resting = {}
+
+    -- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
+
+    sets.idle = {
+		ammo="Staunch Tathlum +1", --DT - 3%
+		head="Nyame Helm", -- DT -7%
+		body="Nyame Mail", -- DT -9%
+		hands="Nyame Gauntlets", -- DT -7%
+		legs="Nyame Flanchard", -- DT -8%
+		feet="Nyame Sollerets", -- DT -7%
+		neck="Loricate Torque +1", -- DT -6%
+		waist="Flume Belt", -- PDT -4%
+		left_ear="Genmei Earring",
+		right_ear="Odnowa Earring +1",
+		left_ring="Moonlight Ring", -- DT -5%
+		right_ring="Defending Ring", -- DT -10%
+		back="Moonbeam Cape", -- PDT -5%
+	}
+	
+	sets.idle.Refresh = {
+		ammo="Staunch Tathlum +1", --DT - 3%
+		head="Nyame Helm", -- DT -7%
+		body="Malignance Tabard", -- DT -9%
+		hands="Malignance Gloves", -- DT - 5%
+		legs="Rawhide Trousers",
+		feet="Nyame Sollerets", -- DT -7%
+		neck="Loricate Torque +1", -- DT -6%
+		waist="Flume Belt", -- PDT -4%
+		left_ear="Genmei Earring",
+		right_ear="Odnowa Earring +1",
+		left_ring="Stikini Ring +1",
+		right_ring="Defending Ring", -- DT -10%
+		back="Moonbeam Cape", -- PDT -5%	
+	}
+		
+    sets.idle.Weak = set_combine(sets.idle, {})
+
+	sets.DayIdle = {}
+	sets.NightIdle = {}
+
+    -- Defense sets
+
+    sets.defense.PDT = {
+		ammo="Staunch Tathlum +1", --DT - 3%
+		head="Nyame Helm", -- DT -7%
+		body="Nyame Mail", -- DT -9%
+		hands="Nyame Gauntlets", -- DT -7%
+		legs="Nyame Flanchard", -- DT -8%
+		feet="Nyame Sollerets", -- DT -7%
+		neck="Loricate Torque +1", -- DT -6%
+		waist="Flume Belt", -- PDT -4%
+		left_ear="Telos Earring",
+		right_ear="Sherida Earring",
+		left_ring="Moonlight Ring", -- DT -5%
+		right_ring="Defending Ring", -- DT -10%
+		back="Moonbeam Cape", -- PDT -5%
+	}
+
+    sets.defense.MDT = sets.defense.PDT
+		
+	sets.defense.MEVA = sets.defense.PDT
+
+
+    --------------------------------------
+    -- Melee sets  
+    --------------------------------------
+
+    -- Normal melee group
+    sets.engaged = {
+		ammo="Coiste Bodhar",
+			--ammo="Aurgelmir Orb",
+		head=ATT_Adhemar_Head,
+		body=ATT_Adhemar_Body,
+		hands=ATT_Adhemar_Hands,
+		legs="Meg. Chausses +1",
+		feet=TA_Herc_Feet,
+		neck="Asn. Gorget +1",
+    waist="Windbuffet Belt +1",
+    left_ear="Telos Earring",
+    right_ear="Sherida Earring",
+    left_ring="Moonlight Ring",
+    right_ring="Epona's Ring",
+		back=STP_DEX_THF_back,
+	}
+		
+	sets.engaged.Acc = set_combine(sets.engaged, {}) --right_ring="Regal Ring"
+		
+    sets.engaged.FullAcc = {
+		ammo="Seeth. Bomblet +1",
+			--ammo="Aurgelmir Orb",
+		head="Nyame Helm",
+		body=ATT_Adhemar_Body,
+		hands="Malignance Gloves",
+		legs="Nyame Flanchard",
+		feet="Malignance Boots",
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Telos Earring",
+		right_ear="Sherida Earring",
+		left_ring="Moonlight Ring",
+		right_ring="Epona's Ring",
+		back=STP_DEX_THF_back,
+	}
+
+    sets.engaged.PDT = {
+		ammo="Coiste Bodhar",
+		head=ATT_Adhemar_Head,
+		body="Malignance Tabard", -- DT -9%
+		hands="Malignance Gloves", -- DT -5%
+		legs="Nyame Flanchard", -- DT -8%
+		feet="Malignance Boots", -- DT -4%
+		neck="Asn. Gorget +1",
+		waist="Sailfi Belt +1",
+		left_ear="Telos Earring",
+		right_ear="Sherida Earring",
+		left_ring="Moonlight Ring", -- DT -5%
+    right_ring="Defending Ring", --DT -10%
+		back=STP_DEX_THF_back	-- PDT -10%
+	}
+
+    sets.engaged.Acc.PDT = sets.engaged.PDT
+
+    sets.engaged.FullAcc.PDT = sets.engaged.PDT
+end
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+    -- Default macro set/book
+    set_macro_page(1, 4)
+end
