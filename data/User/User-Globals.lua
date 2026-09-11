@@ -52,22 +52,22 @@ send_command('alias team2 sat alltarget; sat youattack @cor;sat youattack @brd;s
 ---INVITE SHIT --------
     send_command('alias addm input /pcmd add Misskillface')
     send_command('alias addb input /pcmd add Bazookatooth')
-    send_command('alias addd input /pcmd add Discreetskeet')
+    send_command('alias addd input /pcmd add Deadplay')
     send_command('alias addz input /pcmd add Zonobia')
-    send_command('alias addy input /pcmd add Funcrusher')
+    send_command('alias addkev input /pcmd add Kevplaything')
     send_command('alias addk input /pcmd add Kaht')
-    send_command('alias adde input /pcmd add Elli')
+    send_command('alias addkage input /pcmd add Kagemusha')
     send_command('alias addp input /pcmd add Paoja')
     send_command('alias adddier input /pcmd add Dierdren')
     send_command('alias addmuf input /pcmd add Muffintops')
     send_command('alias addf input /pcmd add Faithfulx')
-    send_command('alias addg input /pcmd add genoside')
+    send_command('alias addt input /pcmd add Thope')
 
     send_command('alias addall input /pcmd add Bazookatooth; wait .1; input /pcmd add Funcrusher; wait .1; input /pcmd add Zonobia; wait .1; input /pcmd add Misskillface;wait .1;') --  input /pcmd add Discreetskeet;
-    send_command('alias addmine  addb; wait 2; addy; wait 2; addm') --  wait 2; addd; wait 2; addg;
+    send_command('alias addmine  addb; wait 2; addy; wait 2; addm ; wait 2; addd') --  wait 2; addd; wait 2; addg;
     send_command('alias addkahts addb; wait 2; addy; wait 2; addm;  wait 2; addk; wait 2; addz') -- wait 2; addd;
 
-    --- Leader
+    --- Leader Shit
     send_command('alias passlead send @others /pcmd leader '..player.name..' ')
     
 ---KAHT'S FOLLOW SHIT---
@@ -101,16 +101,16 @@ send_command('alias team2 sat alltarget; sat youattack @cor;sat youattack @brd;s
 
     send_command('alias ol12 ord rr* /assist '..player.name..';wait 1.5;dall input /echo *** targeting <t>. ***')
 
----ROLLS
+---Roll Shit
     send_command('alias french send @cor //roller roll')
 
 --Treasury Stuff
-    send_command('alias pass send @others //tr passall')
-    send_command('alias piss send @all //tr passall')
-    send_command('alias lot input //tr lotall')
+    send_command('alias pass send @others //alex passall')
+    send_command('alias piss send @all //alex passall')
+    send_command('alias lot input //alex lotall')
     send_command('alias eltee send @all lua l treasury')
 
----MOUNT STUFF
+---MOUNT Shit
     send_command('alias crabs ord rr mr')
     send_command('bind @m ord rr mr')
     send_command('alias walk ord rr /dismount')
@@ -141,6 +141,10 @@ send_command('alias team2 sat alltarget; sat youattack @cor;sat youattack @brd;s
     send_command('alias ewe ew enter')
     send_command('alias aewe ew all enter')
     send_command('alias dom ew domain')
+    send_command('alias nexus gs c useitem back "Nexus Cape" ')
+
+    -- Escha temp items
+    send_command('alias bleh exec bleh')
     
 
 ---SNEAK/INVIS PARTY //sipx
@@ -148,12 +152,16 @@ send_command('alias team2 sat alltarget; sat youattack @cor;sat youattack @brd;s
     send_command('alias gsnk send @geo /sneak <tid>;')
     send_command('alias ginv send @geo /invisible <tid>;')
     
-    send_command('alias rakasnk send @others /sneak <meid>; wait 5; send @geo /invisible <meid>; wait 5; send @others /sneak <me>; wait 6; send @others /invisible <me>')
+    send_command('alias rakasnk send @others /ma sneak Misskillface; wait 5; send @others /ma invisible Misskillface; wait 5; send @others /sneak <me>; wait 6; send @others /invisible <me>')
 
     send_command('alias sall send @all /sneak <me>')
     send_command('alias iall send @all /invisible <me>')
     send_command('alias ciall send @all //cancel 69')
     send_command('alias csall send @all //cancel 71')
+
+--- MOVEMENT SHIT
+    send_command('alias bolt send @cor /boltersroll')
+    send_command('alias maz send @brd /chocobomazurka')
 
 ---GEO BUBBLES
 	send_command('alias bahh send @geo gs c autoindi haste')
@@ -224,7 +232,6 @@ send_command('alias team2 sat alltarget; sat youattack @cor;sat youattack @brd;s
 
 
 --- COR SHIT ---
-	send_command('alias bolt send @cor /boltersroll')
 	send_command('alias dubs send @cor /doubleup')
 	send_command('alias snake send @cor /snakeeye')
 	send_command('alias randy send @cor /randomdeal')
@@ -257,6 +264,7 @@ send_command('alias team2 sat alltarget; sat youattack @cor;sat youattack @brd;s
 
  --- Misc. Binds and alias stuff
 	send_command('alias repo send misskillface exec logins/reposition')
+    send_command('alias lap send @all exec logins/lap')
     send_command('bind @w gs c cycle SkipProcWeapons')
     send_command('alias frd1 config FrameRateDivisor 1')
     send_command('alias frd2 config FrameRateDivisor 2')
