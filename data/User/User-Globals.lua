@@ -80,6 +80,10 @@ send_command('alias team2 sat alltarget; sat youattack @cor;sat youattack @brd;s
     send_command('alias fme ord oo input /follow '..player.name..';wait 0.5;ord z input /echo *** Follow on. ***')
     send_command('alias lme ord oo setkey numpad7 down;wait 0.1;ord oo setkey numpad7 up;wait 0.5;ord z input /echo === Follow off. ===')
 
+    -- sage follow shit
+    send_command('alias sfme send @others input //sage all follow '..player.name..';wait 0.5;ord z input /echo *** Follow on. ***')
+    send_command('alias slme input //sage all follow off;wait 0.5;ord z input /echo *** Follow off. ***')
+
     -- send_command('allias follow input /follow')
     -- send_command('bind ^f send @others input /follow '..player.name..';wait 0.5;send @all input /echo *** Follow on. ***')
     -- send_command('bind !f send @others setkey numpad7 down;wait 0.1;send @others setkey numpad7 up;wait 0.5;send @all input /echo === Follow off. ===')
