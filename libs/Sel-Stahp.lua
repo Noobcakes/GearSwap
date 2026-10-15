@@ -344,6 +344,18 @@ function check_reaction(act)
 			return
 		elseif ProshellraAbility:contains(act_info.name) and sets.Sheltered then
 			send_command('gs c softequip sets.Sheltered') return
+		elseif act_info.name == 'Phalanx' then
+			--[[
+			if 'Accession' then
+				if sets.Phalanx_Received then
+					send_command('gs c softequip sets.Phalanx_Received')
+				elseif sets.midcast.Phalanx then
+					send_command('gs c softequip sets.midcast.Phalanx')
+				elseif sets.Enhancing_Received then
+					send_command('gs c softequip sets.Enhancing_Received')
+				end
+			end
+			--]]
 		end
 	end
 

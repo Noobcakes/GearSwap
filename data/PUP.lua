@@ -285,6 +285,12 @@ function job_self_command(commandArgs, eventArgs)
 		else
 			add_to_chat(123,'Error: No valid pet.')
 		end
+	elseif commandArgs[1] == 'autopetmode' then
+		if pet.isvalid then
+			state.PetMode:set(get_pet_mode())
+		else
+			add_to_chat(123,'Error: No valid pet.')
+		end
 	end
 end
 

@@ -363,11 +363,11 @@ function apply_grimoire_bonuses(spell, action, spellMap)
 		equip(sets.buff['Focalization'])
 	end
 
-	if state.Buff.Penury then
-		equip(sets.buff['Penury'])
-	elseif state.Buff.Parsimony then
-		equip(sets.buff['Parsimony'])
-	end
+    if state.Buff.Penury and (spellMap == 'Cure' or spellMap == 'Curaga' or spellMap == 'Raise') then
+        equip(sets.buff['Penury'])
+    elseif state.Buff.Parsimony and is_nuke(spell, spellMap) then
+        equip(sets.buff['Parsimony'])
+    end
 	
 	if spell.element == world.weather_element then
 		if state.Buff.Celerity then

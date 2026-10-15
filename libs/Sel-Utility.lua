@@ -502,7 +502,6 @@ function set_macro_page(set,book)
 	end
 end
 
-
 -- Function for optionally including files if they exist.
 function optional_include(filename)
 	if filename:startswith('User') then
@@ -2849,10 +2848,10 @@ windower.raw_register_event('prerender', function()
 				send_command('gs c update')
 			end
 			
-			if not state.Uninterruptible.value == 'Full' then
+			if state.Uninterruptible.value ~= 'Full' then
 				delayed_cast = ''
 				prepared_action = ''
-				if buffup~= '' then
+				if buffup ~= '' then
 					buffup = ''
 					add_to_chat(123,'Buffup cancelled due to movement.')
 				end
@@ -3043,10 +3042,25 @@ warcry_tp_bonus = get_warcry_tp_bonus()
 
 function set_dual_wield()
 	-- Checks Job Traits directly. Will always recognize DW appropriately for all jobs (NIN ,DNC, THF, BLU)
-	local traits = T(windower.ffxi.get_abilities().job_traits)
-	can_dual_wield = traits:any(function(v) return gearswap.res.job_traits[v].english == 'Dual Wield' end)
+	if windower.packets.last_outgoing(0x100) and windower.packets.last_incoming(0x0AC) then
+		if windower.packets.last_outgoing(0x100) > windower.packets.last_incoming(0x0AC) then
+			set_dual_wield:schedule(3)
+		else
+			local traits = T(windower.ffxi.get_abilities().job_traits)
+			local initialize = false
+			if can_dual_wield == '' then
+				initialize = true
+			end
+			can_dual_wield = traits:any(function(v) return gearswap.res.job_traits[v].english == 'Dual Wield' end)
+			if initialize then
+				send_command('gs c weapons initialize')
+			end
+		end
+	else
+		set_dual_wield:schedule(3)
+	end
+	
 
-	send_command('gs c weapons initialize')
 end
 
 function get_closest_mob_id_by_name(name)

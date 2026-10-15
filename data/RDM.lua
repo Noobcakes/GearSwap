@@ -246,11 +246,19 @@ function job_post_midcast(spell, spellMap, eventArgs)
 				end
 			end
 
-			if spell.english:startswith('Phalanx') and spell.target.type =='SELF' and sets.Self_Phalanx then
-				equip(sets.Self_Phalanx)
-
-				if can_dual_wield and sets.Self_Phalanx.DW then
-					equip(sets.Self_Phalanx.DW)
+			if spell.target.type =='SELF' then
+				if spell.english:startswith('Phalanx') then
+					if sets.Self_Phalanx then
+						equip(sets.Self_Phalanx)
+						
+						if can_dual_wield and sets.Self_Phalanx.DW then
+							equip(sets.Self_Phalanx.DW)
+						end
+					end
+				elseif spell.english:startswith('Refresh') then
+					if sets.Self_Refresh then
+						equip(sets.Self_Refresh)
+					end
 				end
 			end
 

@@ -275,6 +275,7 @@ function init_include()
 	check_internal_weapons = false
 	fixed_pos = ''
 	custom_runes = {}
+	can_dual_wield = ''
 
 	-- Buff tracking that buffactive can't detect
 	lastwarcry = ''
@@ -438,7 +439,7 @@ function init_include()
 	-- New implementation of tick.
 	windower.raw_register_event('prerender', function()
 		if not (os.clock() > tickdelay) then return end
-		gearswap.refresh_globals(false)
+		gearswap.refresh_globals()
 		
 		if (player ~= nil) and (player.status == 'Idle' or player.status == 'Engaged') and not (just_acted() or moving or silent_check_disable()) then
 			prepared_action = ''
@@ -579,7 +580,7 @@ function default_zone_change(new_id,old_id)
 	useItemName = ''
 	useItemSlot = ''
 
-	if world.area:contains('Abyssea') or data.areas.proc:contains(world.area) then
+	if world.area:startswith('Abyssea') or data.areas.proc:contains(world.area) then
 		state.SkipProcWeapons:set('False')
 	else
 		state.SkipProcWeapons:reset()
@@ -650,19 +651,11 @@ end
 -- Non item-based global settings to check on load.
 function global_on_load()
 	if world.area then
-		if windower.packets.last_outgoing(0x100) and windower.packets.last_incoming(0x0AC) then
-			if windower.packets.last_outgoing(0x100) > windower.packets.last_incoming(0x0AC) then
-				set_dual_wield:schedule(5)
-			else
-				set_dual_wield()
-			end
-		else
-			set_dual_wield:schedule(5)
-		end
-
 		if world.area:contains('Abyssea') or data.areas.proc:contains(world.area) then
 			state.SkipProcWeapons:set('False')
 		end
+		
+		set_dual_wield()
 		
 		if data.areas.cities:contains(world.area) then
 			in_town = true
@@ -701,12 +694,11 @@ end
 function handle_actions(spell, action)
 	-- Init an eventArgs that allows cancelling.
 	local eventArgs = {handled = false, cancel = false}
-
 	mote_vars.set_breadcrumbs:clear()
+	gearswap.refresh_globals()
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = get_spell_map(spell)
-	gearswap.refresh_globals(false)
 
 	-- General filter checks to see whether this function should be run.
 	-- If eventArgs.cancel is set, cancels this function, not the spell.
@@ -2267,6 +2259,7 @@ end
 
 -- Called when the player's subjob changes.
 function sub_job_change(newSubjob, oldSubjob)
+	can_dual_wield = ''
 	set_dual_wield:schedule(5)
 	if user_setup then
 		user_setup()
@@ -2310,8 +2303,9 @@ function sub_job_change(newSubjob, oldSubjob)
 end
 	
 -- Register event to fix Gearswap ignoring the event status for status_change.
-windower.register_event('status change', function(newStatus, oldStatus)
-	if oldStatus == 4 --[[event]] then
+windower.raw_register_event('status change', function(newStatus, oldStatus)
+	if oldStatus == 4 --[[event status]] then
+		gearswap.refresh_globals()
 		status_change(newStatus, oldStatus)
 	end
 end)
